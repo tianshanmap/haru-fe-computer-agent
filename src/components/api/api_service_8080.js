@@ -24,6 +24,9 @@ export function getRoot() {
 export function getAudioList() {
     return callRemote(API_BASE_URL_8080 + '/filesystem/video/audio_list')
 }
+export function getVideoList() {
+    return callRemote(API_BASE_URL_8080 + '/filesystem/video/export_list')
+}
 export function getVideoUploadPath() {
     return callRemote(API_BASE_URL_8080 + '/filesystem/upload_target_path')
 }

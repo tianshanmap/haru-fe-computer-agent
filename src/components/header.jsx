@@ -6,6 +6,7 @@ function Header(){
             <button onClick={() => navigate("/")}>Home</button>
             <button onClick={() => navigate("/file-explorer")}>File Explorer</button>
             <button onClick={() => navigate("/videoman")}>Video Creator</button>
+            <button onClick={() => navigate("/videolist")}>Video List</button>
         </div>
     )
 }
