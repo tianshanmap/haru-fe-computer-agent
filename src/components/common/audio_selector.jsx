@@ -107,6 +107,7 @@ const AudioSelector = ({onComplete,onExit}) => {
     console.log("handleContinue::request=" + JSON.stringify(request));
     try {
          let remote_url =getAudioGenerateEndPoint();
+         console.log("handleContinue::remote_url=" + remote_url);
          const response = await fetch(remote_url, {
            method: 'POST', // Explicitly declare POST method
            headers: {

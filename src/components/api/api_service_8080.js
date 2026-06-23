@@ -59,6 +59,7 @@ export function getCreateEndPoint(name,parent) {
     return API_BASE_URL_8080 + '/filesystem/create?name=' + name + "&parent=" + parent;
 }
 export function getAudioGenerateEndPoint() {
+    console.log("getAudioGenerateEndPoint,API_BASE_URL_8080=" + API_BASE_URL_8080);
     return API_BASE_URL_8080 + '/filesystem/audio/generate';
 }
 
