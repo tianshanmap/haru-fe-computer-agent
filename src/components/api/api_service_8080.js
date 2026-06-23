@@ -1,4 +1,4 @@
-const API_BASE_URL_8080 = 'http://localhost:8080';
+const API_BASE_URL_8080 = window.API_BASE_URL_8080;
 
 // Reusable request wrapper
 const callRemote = async (remote_url) => {

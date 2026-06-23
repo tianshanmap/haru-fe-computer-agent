@@ -1,4 +1,4 @@
-const API_BASE_URL_8081 = 'http://tianshan.ca:8081';
+const API_BASE_URL_8081 = window.API_BASE_URL_8081;
 const CHUNK_SIZE = 5 * 1024 * 1024; // 5MB
 
 // Reusable request wrapper
