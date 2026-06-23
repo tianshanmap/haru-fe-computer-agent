@@ -63,7 +63,7 @@ const FileUploadForm = ({ name,remote_url,onConfirm }) => {
           <input 
             type="file" 
             onChange={handleFileChange} 
-            accept="image/*,.pdf,.doc,.docx" // Optional: restrict file types
+            accept="*" // Optional: restrict file types
           />
           <input type="hidden" name="target" value={name}/> 
         </div>
