@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 // Central configuration
-const API_BASE_URL_8080 = 'http://tianshan.ca:8080';
-const API_BASE_URL_8081 = 'http://tianshan.ca:8081';
+const API_BASE_URL_8080 = window.API_BASE_URL_8080;
+const API_BASE_URL_8081 = window.API_BASE_URL_8081;
 
 export const useApiClient = () => {
   const [loading, setLoading] = useState(false);
