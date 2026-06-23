@@ -14,9 +14,11 @@ const callRemote = async (remote_url) => {
 }  
 
 export function getDirectory(name) {
+    console.log("getDirectory,name=" + name + ",API_BASE_URL_8080=" + API_BASE_URL_8080);
     return callRemote(API_BASE_URL_8080 + '/filesystem/folder?name=' + name)
 }
 export function getRoot() {
+    console.log("getRoot API_BASE_URL_8080=" + API_BASE_URL_8080);
     return getDirectory("/")
 }
 export function getAudioList() {
