@@ -50,11 +50,11 @@ function ImageBlock({name,list,onComplete,onExit}){
     document.getElementById("img_container").width = document.getElementById("img_container").width - 100;
   };
   const handleDelete = async (event) => {
-    console.log("handleDelete::called");
+    console.log("handleDelete::delete item=" + currentImage);
     let data = await deleteFile(currentImage);
     if (data != null){
       handleNext(event);
-      let image_list = data.files.filter(x => x.path.endsWith(".jpg") || x.path.endsWith(".jpeg") || x.path.endsWith(".png")).map(x => x.path);
+      let image_list = data.files.filter(x => x.path.endsWith(".jpg") || x.path.endsWith(".jpeg") || x.path.endsWith(".png") || x.path.endsWith(".JPG")).map(x => x.path);
       setImageList(image_list);
     }
   };
