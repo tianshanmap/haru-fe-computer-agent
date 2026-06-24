@@ -79,7 +79,7 @@ function ExplorerSection(){
         setFlow("video");
       } else if (filename.endsWith(".mp3") || filename.endsWith(".wav")){
         setFlow("audio");
-      } else if (current.endsWith(".jpeg") || current.endsWith(".jpg") || current.endsWith(".png")){
+      } else if (current.endsWith(".jpeg") || current.endsWith(".jpg") || current.endsWith(".png") || current.endsWith(".JPG")){
         setImageList(list.filter(x => x.path.endsWith(".jpg") || x.path.endsWith(".jpeg") || x.path.endsWith(".png") || x.path.endsWith(".JPG")).map(x => x.path));
         setFlow("image");
       } else if (filename.endsWith(".pdf")){
