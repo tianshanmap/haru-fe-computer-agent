@@ -17,7 +17,7 @@ export default function DragAndDropProfile({image_path,onComplete,onExit}) {
 
         // 1. Split the string into an array
         // 2. Use .map() to return an object for each item
-        const fruitObjects = result.files.filter(x => !x.name.startsWith(".") && (x.name.endsWith(".jpeg") || x.name.endsWith(".jpg"))).map(x => {
+        const fruitObjects = result.files.filter(x => !x.name.startsWith(".") && (x.name.endsWith(".jpeg") || x.name.endsWith(".jpg") || x.name.endsWith(".JPG") || x.name.endsWith(".png"))).map(x => {
             return { id: x.path, text: x.name, column: 'left' };
         });
         setItems(fruitObjects);
