@@ -11,3 +11,19 @@
   border-width: 1px;
   color: black;
 }
+
+.video_container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: end;
+  width : 1024px;
+}
+
+.video_container button {
+  flex: 1;
+}
+
+.video_item {
+  flex: 1;
+}

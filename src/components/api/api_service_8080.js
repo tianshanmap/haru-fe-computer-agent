@@ -46,6 +46,9 @@ export function deleteFile(name,target="") {
 export function createDirectory(name,target) {
     return callRemote(API_BASE_URL_8080 + '/filesystem/create?name=' + name + '&parent=' + target);
 }
+export function convertMtsToMp4(name,target) {
+    return callRemote(API_BASE_URL_8080 + '/filesystem/convert?name=' + name + '&parent=' + target);
+}
 export function getUploadEndPoint() {
     return API_BASE_URL_8080 + '/filesystem/upload';
 }

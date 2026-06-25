@@ -5,6 +5,9 @@ import {
   getViewEndPoint,
   deleteFile,
 } from "../api/api_service_8080";
+import { 
+        bytesToMB,
+      } from "../api/utils";
 
 const VideoList = ({onExit}) => {
   // let selected_audio = [];
@@ -72,7 +75,7 @@ const VideoList = ({onExit}) => {
                   <tr>
                       <td>{item.name}</td>
                       <td>
-                        {item.path}
+                        {bytesToMB(item.size)}
                       </td>
                       <td>
                         <button className={styles.audio_button} onClick={handlePlay} src={item.path}>Play</button>&nbsp;&nbsp;

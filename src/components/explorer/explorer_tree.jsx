@@ -1,15 +1,42 @@
 import styles from "./explorer_tree.module.css"
+import { 
+        bytesToMB,
+      } from "../api/utils";
 
-function ExplorerTree({data,list,handleSelection,handleDownload,handleUpload,handleCopy,handleMove,handleDelete,handleView,handleNew}){
+function ExplorerTree({data,
+                      list,
+                      handleSelection,
+                      handleDownload,
+                      handleUpload,
+                      handleCopy,
+                      handleMove,
+                      handleDelete,
+                      handleView,
+                      handleNew,
+                      handleConvert
+                    }){
 
+  const totalBytes = () => {
+    const totalAmount = list.map(item => item.size).reduce((accumulator, currentPrice) => accumulator + currentPrice, 0);  
+    return bytesToMB(totalAmount);    
+  }
   const handleClickView = (event) => {
     handleView(event);  
   }  
-
+  const handlePreConvert = (event) => {
+    const filepath = event.target.getAttribute("name")
+    if (filepath.endsWith(".MTS") || filepath.endsWith(".mts")){
+      handleConvert();
+    } else {
+      alert("Only MTS file can be converted to mp4");
+    }
+  }
   return (
     <table className="explorer_table">
       <thead>
         <tr>
+          <th></th>
+          <th></th>
           <th></th>
           <th></th>
         </tr>
@@ -19,6 +46,7 @@ function ExplorerTree({data,list,handleSelection,handleDownload,handleUpload,han
           <td>
             <div className={styles.table_td_box}>Current Directory : {data.parent + "/" + data.name}</div>
           </td>
+          <td>{totalBytes()}</td>
           <td></td>
         </tr>
         <tr>
@@ -26,12 +54,17 @@ function ExplorerTree({data,list,handleSelection,handleDownload,handleUpload,han
             <div className={styles.table_td_box}>Parent Directory : <a href="#" name={data.parent} onClick={handleSelection}>{data.parent}</a></div>
           </td>
           <td></td>
+          <td></td>
         </tr>
         {/* 2. Use .map() to loop through the array and return table rows */}
         {list.map((item) => (
           <tr>
             {item.kind === 'folder' && <td><a href="#" name={item.path} onClick={handleSelection}>{item.name}</a></td>}
+            {item.kind === 'folder' && <td></td>}
+            {item.kind === 'folder' && <td></td>}
             {item.kind === 'file' && <td>{item.name}</td>}
+            {item.kind === 'file' && <td>{bytesToMB(item.size)}</td>}
+            {item.kind === 'file' && <td>{item.last_update}</td>}
             {item.kind === 'folder' && <td>
                                         <button name={item.path} parent={item.parent_path} onClick={handleDownload} className="link-button">Download</button>&nbsp;&nbsp;
                                         <button name={item.path} parent={item.parent_path} onClick={handleUpload} className="link-button">Upload</button>&nbsp;&nbsp;
@@ -45,7 +78,8 @@ function ExplorerTree({data,list,handleSelection,handleDownload,handleUpload,han
                                         <button name={item.path} parent={item.parent_path} onClick={handleDownload} className="link-button">Download</button>&nbsp;&nbsp;
                                         <button name={item.path} parent={item.parent_path} onClick={handleMove} className="link-button">Move</button>&nbsp;&nbsp;
                                         <button name={item.path} parent={item.parent_path} onClick={handleCopy} className="link-button">Copy</button>&nbsp;&nbsp;
-                                        <button name={item.path} parent={item.parent_path} onClick={handleDelete} className="link-button">Delete</button>
+                                        <button name={item.path} parent={item.parent_path} onClick={handleDelete} className="link-button">Delete</button>&nbsp;&nbsp;
+                                        <button name={item.path} parent={item.parent_path} onClick={handlePreConvert} className="link-button">Convert</button>
                                         </td>}
           </tr>
         ))}

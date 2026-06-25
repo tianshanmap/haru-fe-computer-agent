@@ -1,9 +1,11 @@
 import { useState,useEffect,useCallback } from "react"
+import styles from "./explorer_tree.module.css"
 import ConfirmationDialog from "../ConfirmationDialog";
 import MoveCopyDialog from "../MoveCopyDialog";
 import UploadDialog from "../UploadDialog";
 import DownloadDialog from "../DownloadDialog";
 import CreateDialog from "../CreateDialog";
+import ConvertDialog from "../ConvertDialog";
 import ExplorerTree from "./explorer_tree"
 import ImageContainer from "./ImageContainer";
 import { 
@@ -15,6 +17,7 @@ import {
         getDeleteEndPoint,
         getMoveEndPoint,
         getCreateEndPoint,
+        convertMtsToMp4,
       } from "../api/api_service_8080";
 import { getDownloadEndPoint } from "../api/api_service_8081";
 
@@ -34,6 +37,7 @@ function ExplorerSection(){
     const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
     const [isDownloadDialogOpen, setIsDownloadDialogOpen] = useState(false);
     const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+    const [isConvertDialogOpen, setIsConvertDialogOpen] = useState(false);
     const [message, setMessage] = useState("");
     const [targetMoveCopyPath, setTargetMoveCopyPath] = useState("");
 
@@ -75,7 +79,7 @@ function ExplorerSection(){
       console.log("handleView::parentname=" + parentname);
       setCurrent(filename);
       setParent(parentname);
-      if (filename.endsWith(".mp4")){
+      if (filename.endsWith(".mp4") || filename.endsWith(".webm")){
         setFlow("video");
       } else if (filename.endsWith(".mp3") || filename.endsWith(".wav")){
         setFlow("audio");
@@ -136,6 +140,15 @@ function ExplorerSection(){
         // setFlow("delete")
         setParent(parentname);
     }
+    function handleConvert(event){
+        setIsConvertDialogOpen(true);
+        setMessage("Are you sure to convert " + event.target.getAttribute("name") + "?");
+        setCurrent(event.target.getAttribute("name"));
+        var parentname = event.target.getAttribute("parent");
+        setUrl(getCreateEndPoint(event.target.getAttribute("name"),parentname));        
+        // setFlow("delete")
+        setParent(parentname);
+    }
     function handleDelete(event){
         setIsDialogOpen(true);
         setMessage("Are you sure to delete " + event.target.getAttribute("name") + "?");
@@ -183,6 +196,14 @@ function ExplorerSection(){
       setList(data.files);
       setFlow("");
     };
+    const handleConvertDialogConfirm = async () => {
+      setIsConvertDialogOpen(false);
+      console.log("handleConvertDialogConfirm,name=" + current);
+      const data = await convertMtsToMp4(current,parent);
+      setData(data);
+      setList(data.files);
+      setFlow("");
+    };
 
     const handleDialogCancel = () => {
       setIsDialogOpen(false);
@@ -208,6 +229,10 @@ function ExplorerSection(){
       setIsCreateDialogOpen(false);
       console.log("Action Cancelled.");
     };
+    const handleConvertDialogCancel = () => {
+      setIsConvertDialogOpen(false);
+      console.log("Action Cancelled.");
+    };
     
     const handlePathSelect = async (path) => {
       console.log("handlePathSelect::" + path);
@@ -226,10 +251,14 @@ function ExplorerSection(){
       console.log("processing video...")
       return (
         <div className="main">
-          <a href="#" name={parent} onClick={handleSelection}>Back</a>
-          <video width="800" height="600" controls>
-            <source src={url} type="video/mp4"/>
-          </video>
+          <div className={styles.video_container}>
+            <button name={parent} onClick={handleSelection}>Back</button>
+            <div className={styles.video_item}>
+              <video width="1024" height="768" controls>
+                <source src={url} type="video/mp4"/>
+              </video>
+            </div>
+          </div>
         </div>  
       )
     } else if (flow == "audio"){
@@ -292,6 +321,7 @@ function ExplorerSection(){
               handleDelete={handleDelete}
               handleNew={handleNew}
               handleView={handleView}
+              handleConvert={handleConvert}
               />
             <ConfirmationDialog 
               isOpen={isDialogOpen} 
@@ -336,6 +366,13 @@ function ExplorerSection(){
               message={message}
               onCancel={handleCreateDialogCancel}
               onConfirm={handleCreateDialogConfirm}
+              />
+            <ConvertDialog 
+              isOpen={isConvertDialogOpen} 
+              title="Convert MTS to mp4" 
+              message={message}
+              onCancel={handleConvertDialogCancel}
+              onConfirm={handleConvertDialogConfirm}
               />
           </div>
         </div>
