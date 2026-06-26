@@ -1,16 +1,23 @@
 
+import { useState } from 'react';
 import ServerDownload from "./server_download";
 
-const DownloadDialog = ({ isOpen,title, message, onCancel,name,remote_url }) => {
+const DownloadDialog = ({ isOpen,title, message, onConfirm,onCancel,name,remote_url }) => {
+  const [progress,setProgress] = useState(0);
   if (!isOpen) return null;
+
+  const handleProgress = (progressx) => {
+    setProgress(progressx);
+  }
   return (
     <div style={styles.overlay}>
       <div style={styles.modal}>
         <h3>{title}</h3>
         <p>{message}</p>
         <p>{remote_url}</p>
+        <p>Progress : {progress}</p>
         <div style={styles.actions}>
-          <ServerDownload name={name} remote_url={remote_url}/>
+          <ServerDownload name={name} remote_url={remote_url} onConfirm={onConfirm} onProgress={handleProgress}/>
           <button onClick={onCancel} style={styles.cancelBtn}>
             Cancel
           </button>

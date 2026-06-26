@@ -44,7 +44,7 @@ const uploadFileInChunks = async (file,targetPath,setProgress) => {
 };
 
 export function getDownloadEndPoint(name) {
-    return API_BASE_URL_8081 + '/goweb/filesystem/download?name=' + name;
+    return API_BASE_URL_8081 + '/goweb/filesystem/download-chunk?name=' + name;
 }
 export function chunkUpload(file,targetPath,setProgress) {
     return uploadFileInChunks(file,targetPath,setProgress);

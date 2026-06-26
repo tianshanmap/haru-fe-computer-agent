@@ -63,18 +63,17 @@ function ImageBlock({name,list,onComplete,onExit}){
   }
 
   return (
-    <div>
+    <div className={styles.image_block_container}>
       <div className={styles.div_image_cmd_container}>
           <button className={styles.action_btn} onClick={handlePrev}>Prev</button>
           <button className={styles.action_btn} onClick={handleNext}>Next</button>
           <button className={styles.action_btn} onClick={handleScaleUp}>+</button>
           <button className={styles.action_btn} onClick={handleScaleDown}>-</button>
-          <button className={styles.action_btn} onClick={handleDelete}>Trash</button>
           <button className={styles.action_btn} onClick={handleVideoMaker}>Video</button>
           <button className={styles.action_btn} onClick={handleBack}>Back</button>
+          <button className={styles.action_btn} onClick={handleDelete}>Trash</button>
       </div>
       <img id="img_container" src={remoteUrl} width="400"></img>
-
     </div>
   );
 }

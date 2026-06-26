@@ -31,27 +31,21 @@ const ImageContainer = ({ name,parentName,list,onExitAction }) => {
   // console.log("styles.div_image_cmd=" + styles.div_image_cmd);
   return (
     <div className="main">
-        <div className={styles.div_image_wrapper}>
           {isImageOpen && 
-              <div className={styles.div_image_container_image}>
                 <ImageBlock 
                   name={name}
                   list={list}
                   onComplete={handleOpenVideoMaker}
                   onExit={handleExit}
                 />  
-              </div>
           }
           {isVideoMakerOpen && 
-              <div className={styles.div_image_container_audio}>
                 <VideoMaker 
                   image_path={parentName}
                   onExit={handleExit}
                 />
-              </div>
           }          
         </div>
-    </div>  
   );
 }
 export default ImageContainer;

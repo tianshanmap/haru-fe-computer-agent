@@ -1,12 +1,11 @@
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 function Header(){
-  const navigate = useNavigate();
     return(
         <div className="header">
-            <button onClick={() => navigate("/")}>Home</button>
-            <button onClick={() => navigate("/file-explorer")}>File Explorer</button>
-            <button onClick={() => navigate("/videoman")}>Video Creator</button>
-            <button onClick={() => navigate("/videolist")}>Video List</button>
+            <Link to="/">Home</Link>
+            <Link to="/file-explorer">File Explorer</Link>
+            <Link to="/videoman">Video Creator</Link>
+            <Link to="/videolist">Video List</Link>
         </div>
     )
 }

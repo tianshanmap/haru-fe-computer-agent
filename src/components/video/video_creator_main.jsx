@@ -71,16 +71,13 @@ const VideoCreatorMain = () => {
   // console.log("styles.div_image_cmd=" + styles.div_image_cmd);
   return (
     <div className="main">
-        <div className={styles.div_image_wrapper}>
           {isFileUploadOpen &&
-              <div className={styles.div_image_container_fileupload}>
-                <ChunkedUploader 
-                  title="Upload compressed photoes for making video"
-                  name={targetUploadPath}
-                  accept_type=".gz,.zip"
-                  onComplete={handleFileUpload}
-                />  
-              </div>
+              <ChunkedUploader 
+                title="Upload compressed photoes for making video"
+                name={targetUploadPath}
+                accept_type=".gz,.zip"
+                onComplete={handleFileUpload}
+              />  
           }
           {isImageOpen && 
               <div className={styles.div_image_container_image}>
@@ -100,7 +97,6 @@ const VideoCreatorMain = () => {
                 />
               </div>
           }          
-        </div>
     </div>  
   );
 }

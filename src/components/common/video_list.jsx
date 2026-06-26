@@ -51,7 +51,7 @@ const VideoList = ({onExit}) => {
     setIsList(true)
   }
   return (
-        <div className={styles.audio_profile_container}>
+        <div className="main">
           {isPlayer && 
             <div className={styles.video_player}>
                 <video width="1000" controls>
@@ -78,8 +78,8 @@ const VideoList = ({onExit}) => {
                         {bytesToMB(item.size)}
                       </td>
                       <td>
-                        <button className={styles.audio_button} onClick={handlePlay} src={item.path}>Play</button>&nbsp;&nbsp;
-                        <button className={styles.audio_button} onClick={handleDelete} src={item.path}>Delete</button>
+                        <button className="link-button" onClick={handlePlay} src={item.path}>Play</button>&nbsp;&nbsp;
+                        <button className="link-button" onClick={handleDelete} src={item.path}>Delete</button>
                       </td>
                   </tr>
                   ))}

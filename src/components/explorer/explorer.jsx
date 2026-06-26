@@ -1,5 +1,5 @@
 import { useState,useEffect,useCallback } from "react"
-import styles from "./explorer_tree.module.css"
+import styles from "./explorer.module.css"
 import ConfirmationDialog from "../ConfirmationDialog";
 import MoveCopyDialog from "../MoveCopyDialog";
 import UploadDialog from "../UploadDialog";
@@ -188,6 +188,10 @@ function ExplorerSection(){
       setList(data.files);
       setFlow("");
     };
+    const handleDownloadDialogConfirm = async () => {
+      setIsDownloadDialogOpen(false);
+      setFlow("");
+    };
     const handleCreateDialogConfirm = async (name) => {
       setIsCreateDialogOpen(false);
       console.log("Action Confirmed! Perform copy logic here.");
@@ -252,12 +256,10 @@ function ExplorerSection(){
       return (
         <div className="main">
           <div className={styles.video_container}>
-            <button name={parent} onClick={handleSelection}>Back</button>
-            <div className={styles.video_item}>
-              <video width="1024" height="768" controls>
+              <button className={styles.video_button} name={parent} onClick={handleSelection}>Back</button>
+              <video className={styles.video_source} width="1024" height="768" controls>
                 <source src={url} type="video/mp4"/>
               </video>
-            </div>
           </div>
         </div>  
       )
@@ -357,6 +359,7 @@ function ExplorerSection(){
               title="Download a File/Folder" 
               message={message}
               onCancel={handleDownloadDialogCancel}
+              onConfirm={handleDownloadDialogConfirm}
               name={current}
               remote_url={url}
               />
