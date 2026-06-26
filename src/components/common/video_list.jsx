@@ -5,15 +5,23 @@ import {
   getViewEndPoint,
   deleteFile,
 } from "../api/api_service_8080";
+import {
+  getDownloadEndPoint,
+} from "../api/api_service_8081";
 import { 
         bytesToMB,
       } from "../api/utils";
+
+import DownloadDialog from "../DownloadDialog";
 
 const VideoList = ({onExit}) => {
   // let selected_audio = [];
   const [data, setData] = useState({files:[]});
   const [filename, setFilename] = useState("");
+  const [current, setCurrent] = useState("");
+  const [message, setMessage] = useState("");
   const [isPlayer,setIsPlayer] = useState(false);
+  const [isDownloadDialogOpen,setIsDownloadDialogOpen] = useState(false);
   const [isList,setIsList] = useState(true);
 
   useEffect(() => {
@@ -50,6 +58,19 @@ const VideoList = ({onExit}) => {
     setIsPlayer(false);
     setIsList(true)
   }
+  const handleDownloadDialogCancel = () => {
+    setIsDownloadDialogOpen(false);
+    console.log("Action Cancelled.");
+  };
+  const handleDownloadDialogConfirm = async () => {
+    setIsDownloadDialogOpen(false);
+  };
+  const handleDownload = async (event) => {
+    setCurrent(event.target.getAttribute("src"));
+    setIsDownloadDialogOpen(true);
+    setMessage("Are you sure to download file : " + event.target.getAttribute("src") + " ?");
+  };
+
   return (
         <div className="main">
           {isPlayer && 
@@ -79,12 +100,24 @@ const VideoList = ({onExit}) => {
                       </td>
                       <td>
                         <button className="link-button" onClick={handlePlay} src={item.path}>Play</button>&nbsp;&nbsp;
+                        <button className="link-button" onClick={handleDownload} src={item.path}>Download</button>&nbsp;&nbsp;
                         <button className="link-button" onClick={handleDelete} src={item.path}>Delete</button>
                       </td>
                   </tr>
                   ))}
               </tbody>
               </table>
+           }
+           {isDownloadDialogOpen &&
+            <DownloadDialog 
+              isOpen={isDownloadDialogOpen} 
+              title="Download a File" 
+              message={message}
+              onCancel={handleDownloadDialogCancel}
+              onConfirm={handleDownloadDialogConfirm}
+              name={current}
+              remote_url={getDownloadEndPoint(current)}
+              />
            }
         </div>
     );

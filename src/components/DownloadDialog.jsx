@@ -11,6 +11,7 @@ const DownloadDialog = ({ isOpen,title, message, onConfirm,onCancel,name,remote_
     onConfirm();
   }
   const handleProgress = (progressx) => {
+    console.log("handleProgress-progressx=" + progressx);    
     setProgress(progressx);
   }
   return (
