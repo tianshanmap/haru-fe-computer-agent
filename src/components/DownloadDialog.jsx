@@ -6,6 +6,10 @@ const DownloadDialog = ({ isOpen,title, message, onConfirm,onCancel,name,remote_
   const [progress,setProgress] = useState(0);
   if (!isOpen) return null;
 
+  const handleConfirm = () => {
+    setProgress(0);
+    onConfirm();
+  }
   const handleProgress = (progressx) => {
     setProgress(progressx);
   }
@@ -17,7 +21,7 @@ const DownloadDialog = ({ isOpen,title, message, onConfirm,onCancel,name,remote_
         <p>{remote_url}</p>
         <p>Progress : {progress}</p>
         <div style={styles.actions}>
-          <ServerDownload name={name} remote_url={remote_url} onConfirm={onConfirm} onProgress={handleProgress}/>
+          <ServerDownload name={name} remote_url={remote_url} onConfirm={handleConfirm} onProgress={handleProgress}/>
           <button onClick={onCancel} style={styles.cancelBtn}>
             Cancel
           </button>
