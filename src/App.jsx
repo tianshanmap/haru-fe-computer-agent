@@ -4,6 +4,7 @@ import Footer from './components/footer.jsx'
 import ExplorerSection from './components/explorer/explorer.jsx'
 import VideoCreator from './components/video/video_creator_main.jsx'
 import VideoList from './components/common/video_list.jsx'
+import TextEditor from './components/common/text_editor.jsx'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 const FileExplorer = () => {
@@ -42,6 +43,15 @@ const VideoListHome = () => {
     </div>
   )
 }
+const TextEditorHome = () => {
+  return (
+    <div className='container'>
+        <Header/>
+        <TextEditor />
+        <Footer/>
+    </div>
+  )
+}
 
 function App() {
   return (
@@ -51,6 +61,7 @@ function App() {
         <Route path="/file-explorer" element={<FileExplorer/>} />
         <Route path="/videoman" element={<VideoCreatorHome/>} />
         <Route path="/videolist" element={<VideoListHome/>} />
+        <Route path="/textEditor" element={<TextEditorHome/>} />
       </Routes>
     </Router>
   )

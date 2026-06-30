@@ -8,6 +8,9 @@ import CreateDialog from "../CreateDialog";
 import ConvertDialog from "../ConvertDialog";
 import ExplorerTree from "./explorer_tree"
 import ImageContainer from "./ImageContainer";
+import TextEditorPro from "../common/text_editor_pro";
+import FileNameDialog from "../common/dialog/FileNameDialog";
+
 import { 
         getDirectory,
         getRoot,
@@ -40,6 +43,8 @@ function ExplorerSection(){
     const [isConvertDialogOpen, setIsConvertDialogOpen] = useState(false);
     const [message, setMessage] = useState("");
     const [targetMoveCopyPath, setTargetMoveCopyPath] = useState("");
+    const [isExistingNotes,setIsExistingNotes] = useState(true);
+    const [isFileNameDialogOpen,setIsFileNameDialogOpen] = useState(false);
 
     useEffect(() => {
       // 1. Declare the inner async function
@@ -88,6 +93,8 @@ function ExplorerSection(){
         setFlow("image");
       } else if (filename.endsWith(".pdf")){
         setFlow("pdf");
+      } else if (filename.endsWith(".notes")){
+        setFlow("notes");
       }
       const filename_encoded = filename.replace(/\+/g, '%2B').replace(/\&/g, '%26');
       setUrl(getViewEndPoint(filename_encoded));        
@@ -140,14 +147,23 @@ function ExplorerSection(){
         // setFlow("delete")
         setParent(parentname);
     }
+    function handleNewNotes(event){
+        setIsFileNameDialogOpen(true);
+        setMessage("Are you sure to create a new notes under " + event.target.getAttribute("name") + "?");
+        setParent(event.target.getAttribute("name"));
+        setIsExistingNotes(false);
+    }
+    function handleSaveNotes(){
+      setIsExistingNotes(true);
+    }
     function handleConvert(event){
-        setIsConvertDialogOpen(true);
         setMessage("Are you sure to convert " + event.target.getAttribute("name") + "?");
         setCurrent(event.target.getAttribute("name"));
         var parentname = event.target.getAttribute("parent");
         setUrl(getCreateEndPoint(event.target.getAttribute("name"),parentname));        
         // setFlow("delete")
         setParent(parentname);
+        setIsConvertDialogOpen(true);
     }
     function handleDelete(event){
         setIsDialogOpen(true);
@@ -158,6 +174,7 @@ function ExplorerSection(){
         // setFlow("delete")
         setParent(parentname);
     }
+
     const handleDeleteDialogConfirm = async () => {
       setIsDialogOpen(false);
       console.log("Action Confirmed! Perform delete logic here.");
@@ -208,7 +225,18 @@ function ExplorerSection(){
       setList(data.files);
       setFlow("");
     };
+    const handleNotesNameConfirm = async (name) => {
+      if (name.endsWith("*.notes")){
+        setCurrent(parent + "/" + name + ".notes");
+      } else {
+        setCurrent(parent + "/" + name);
+      }
+      setIsFileNameDialogOpen(false);
+      setIsExistingNotes(false);
+      setFlow("notes");
+    };
 
+    
     const handleDialogCancel = () => {
       setIsDialogOpen(false);
       console.log("Action Cancelled.");
@@ -235,6 +263,10 @@ function ExplorerSection(){
     };
     const handleConvertDialogCancel = () => {
       setIsConvertDialogOpen(false);
+      console.log("Action Cancelled.");
+    };
+    const onCancelNotesDialog = () => {
+      setIsFileNameDialogOpen(false);
       console.log("Action Cancelled.");
     };
     
@@ -308,6 +340,13 @@ function ExplorerSection(){
           </object>
         </div>  
       )
+    } else if (flow == "notes"){
+      console.log("processing notes...current=" + JSON.stringify(current));
+      return (
+        <div className="main">
+          <TextEditorPro isExisting={isExistingNotes} name={current} parent={parent} onSave={handleSaveNotes} onExit={handleNavigate}/>
+        </div>  
+      )
     } else {
       return (
         <div className="main">
@@ -322,6 +361,7 @@ function ExplorerSection(){
               handleMove={handleMove}
               handleDelete={handleDelete}
               handleNew={handleNew}
+              handleNewNotes={handleNewNotes}
               handleView={handleView}
               handleConvert={handleConvert}
               />
@@ -377,6 +417,15 @@ function ExplorerSection(){
               onCancel={handleConvertDialogCancel}
               onConfirm={handleConvertDialogConfirm}
               />
+            {isFileNameDialogOpen &&
+              <FileNameDialog
+                title="Assign a name for your notes"
+                message={message}
+                label="Notes Name : "
+                onConfirm={handleNotesNameConfirm}
+                onCancel={onCancelNotesDialog}
+              />             
+            }
           </div>
         </div>
       );

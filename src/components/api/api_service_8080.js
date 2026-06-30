@@ -93,3 +93,38 @@ export function generateVideo(request) {
     }  
     return invokeRemote();
 }
+export function saveNotes(request) {
+    const remote_url = API_BASE_URL_8080 + "/filesystem/texteditor/save";
+    const invokeRemote = async () => {
+        try {
+            const response = await fetch(remote_url, {
+                method: 'POST', // Explicitly declare POST method
+                headers: {
+                    'Content-Type': 'application/json', // Instruct the server you are sending JSON data
+                },
+                body: JSON.stringify(request), // Serialize JavaScript object to JSON string
+            });
+            if (!response.ok) {
+            throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json(); // Parse the server response
+            return data;
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            return null;
+        }
+    }  
+    return invokeRemote();
+}
+export async function getNotes(name) {
+    const remote_url = API_BASE_URL_8080 + "/filesystem/texteditor/load?name=" + name;
+    try {
+        const response = await fetch(remote_url);
+        const data = await response.json();
+        return data.content;
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        return null;
+    }
+}    
