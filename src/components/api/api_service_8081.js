@@ -32,7 +32,7 @@ const uploadFileInChunks = async (file,targetPath,setProgress) => {
       formData.append('totalChunks', totalChunks.toString());
       formData.append('fileChunk', chunk);
 
-      await fetch(API_BASE_URL_8081 + '/goweb/filesystem/upload_chunk', {
+      await fetch(API_BASE_URL_8081 + '/filesystem/upload_chunk', {
         method: 'POST',
         body: formData,
       });
@@ -44,11 +44,11 @@ const uploadFileInChunks = async (file,targetPath,setProgress) => {
 };
 
 export function getDownloadEndPoint(name) {
-    return API_BASE_URL_8081 + '/goweb/filesystem/download-chunk?name=' + name;
+    return API_BASE_URL_8081 + '/filesystem/download-chunk?name=' + name;
 }
 export function chunkUpload(file,targetPath,setProgress) {
     return uploadFileInChunks(file,targetPath,setProgress);
 }
 export function unzip(fileId,target) {
-    return callRemote(API_BASE_URL_8081 + "/goweb/filesystem/unzip?filename=" + fileId + "&target=" + target);
+    return callRemote(API_BASE_URL_8081 + "/filesystem/unzip?filename=" + fileId + "&target=" + target);
 }

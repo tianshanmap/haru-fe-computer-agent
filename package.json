@@ -17,10 +17,12 @@
     "@mantine/core": "^9.4.1",
     "@mantine/hooks": "^9.4.1",
     "@mantine/utils": "^6.0.22",
+    "@react-keycloak/web": "^3.4.0",
     "@react-pdf/renderer": "^4.5.1",
+    "keycloak-js": "^26.2.4",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
-    "react-router-dom": "^6.30.3"
+    "react-router-dom": "^6.30.4"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
