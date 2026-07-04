@@ -10,3 +10,7 @@ npm run dev
 ```
 npm install react-router-dom
 ```
+# Install explorer component
+```
+npm install https://github.com/tianshanmap/haru-reactjs-component-explorer
+```

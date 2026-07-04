@@ -1,17 +1,14 @@
 import './App.css'
 import Header from './components/header.jsx'
 import Footer from './components/footer.jsx'
-import ExplorerSection from './components/explorer/explorer.jsx'
-import VideoCreator from './components/video/video_creator_main.jsx'
-import VideoList from './components/common/video_list.jsx'
-import TextEditor from './components/common/text_editor.jsx'
+import Explorer from 'haru-reactjs-component-explorer'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 const FileExplorer = () => {
   return (
     <div className='container'>
         <Header/>
-        <ExplorerSection />
+        <Explorer />
         <Footer/>
     </div>
   )
@@ -25,43 +22,13 @@ const Home = () => {
     </div>
   )
 }
-const VideoCreatorHome = () => {
-  return (
-    <div className='container'>
-        <Header/>
-        <VideoCreator />
-        <Footer/>
-    </div>
-  )
-}
-const VideoListHome = () => {
-  return (
-    <div className='container'>
-        <Header/>
-        <VideoList />
-        <Footer/>
-    </div>
-  )
-}
-const TextEditorHome = () => {
-  return (
-    <div className='container'>
-        <Header/>
-        <TextEditor />
-        <Footer/>
-    </div>
-  )
-}
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home/>} />
-        <Route path="/file-explorer" element={<FileExplorer/>} />
-        <Route path="/videoman" element={<VideoCreatorHome/>} />
-        <Route path="/videolist" element={<VideoListHome/>} />
-        <Route path="/textEditor" element={<TextEditorHome/>} />
+        <Route path="/file-explorer" element={<FileExplorer/>} git restore />
       </Routes>
     </Router>
   )
